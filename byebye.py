@@ -1,5 +1,6 @@
 import os
 import platform
+import psutil  # For retrieving disk usage information
 
 def list_available_drives():
     """List available drives on the system."""
@@ -7,20 +8,21 @@ def list_available_drives():
     drives = []
     if system == "Windows":
         drives = [f"{chr(drive)}:\\" for drive in range(ord('A'), ord('Z') + 1) if os.path.exists(f"{chr(drive)}:\\")]
-    elif system == "Linux":
-        # On Linux, drives are typically mounted under /media or /mnt
-        drives = [os.path.join("/media", entry) for entry in os.listdir("/media") if os.path.isdir(os.path.join("/media", entry))]
-        drives += [os.path.join("/mnt", entry) for entry in os.listdir("/mnt") if os.path.isdir(os.path.join("/mnt", entry))]
-    elif system == "Darwin":  # macOS
-        # On macOS, drives are typically mounted under /Volumes
-        drives = [os.path.join("/Volumes", entry) for entry in os.listdir("/Volumes") if os.path.ismount(os.path.join("/Volumes", entry))]
+    else:
+        drives = [os.path.join(root, entry) for root, _, entries in os.walk('/media') + os.walk('/mnt') + os.walk('/Volumes') for entry in entries]
     return drives
+
+def get_drive_size(drive_path):
+    """Get the size of the drive in bytes."""
+    usage = psutil.disk_usage(drive_path)
+    return usage.total
 
 def select_drive(drives):
     """Prompt the user to select a drive from the available drives."""
     print("Available drives:")
-    for i, drive in enumerate(drives):
-        print(f"{i + 1}. {drive}")
+    for i, drive in enumerate(drives, start=1):
+        size_gb = get_drive_size(drive) / (1024 ** 3)  # Convert bytes to gigabytes
+        print(f"{i}. {drive} ({size_gb:.2f} GB)")
     selection = input("Enter the number corresponding to the drive you want to select: ")
     try:
         selection_index = int(selection) - 1
@@ -33,22 +35,27 @@ def select_drive(drives):
 
 def secure_delete_and_overwrite_drive(drive_path, overwrite_data):
     """Securely delete and overwrite data on the specified drive."""
-    for root, dirs, files in os.walk(drive_path):
-        for file_name in files:
-            file_path = os.path.join(root, file_name)
-            try:
+    try:
+        for root, _, files in os.walk(drive_path):
+            for file_name in files:
+                file_path = os.path.join(root, file_name)
                 with open(file_path, "wb") as f:
                     f.write(overwrite_data)
-            except Exception as e:
-                print(f"Error: {e}")
+        print(f"Data securely deleted and overwritten on {drive_path}.")
+    except Exception as e:
+        print(f"Error occurred while securely deleting and overwriting data on {drive_path}: {e}")
 
 # List available drives and prompt user to select one
 drives = list_available_drives()
 if drives:
     drive_path = select_drive(drives)
     if drive_path:
-        # Data to overwrite the files with (e.g., random data)
-        overwrite_data = os.urandom(1024)  # Adjust size as needed
+        # Get the size of the selected drive
+        drive_size = get_drive_size(drive_path)
+        
+        # Adjust the size of overwrite data based on the size of the drive
+        overwrite_data_size_gb = min(drive_size / (1024 ** 3), 1)  # Cap overwrite size at 1 GB
+        overwrite_data = os.urandom(int(overwrite_data_size_gb * (1024 ** 3)))  # Convert GB to bytes
 
         # Perform secure deletion and overwrite on the selected drive
         secure_delete_and_overwrite_drive(drive_path, overwrite_data)
