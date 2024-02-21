@@ -16,6 +16,8 @@ ByeBye is a Python script designed to securely delete and overwrite data on driv
 
 ## Usage
 
+### Running the Script Locally
+
 1. Clone or download the ByeBye repository to your local machine.
 2. Open a terminal or command prompt.
 3. Navigate to the directory containing the `byebye.py` script.
@@ -28,6 +30,20 @@ ByeBye is a Python script designed to securely delete and overwrite data on driv
 5. Follow the prompts to select a drive and securely delete its contents.
 
 **Note:** Ensure that you have appropriate permissions to modify the files on the selected drive. Always make sure you have backups of important data before running the script.
+
+### Running the Script Remotely
+
+1. Ensure that your remote machine (e.g., a VirtualBox VM) is configured with a network adapter that allows network connectivity.
+2. Install and configure an SSH server on the remote machine if not already installed.
+3. Determine the IP address of the remote machine.
+4. From your local machine, open a terminal or command prompt.
+5. Use the `ssh` command to connect to the remote machine and execute the script remotely:
+
+    ```bash
+    ssh username@remote_host 'python /path/to/your/script.py'
+    ```
+
+    Replace `username` with your username on the remote machine, `remote_host` with the hostname or IP address of the remote machine, and `/path/to/your/script.py` with the path to your Python script on the remote machine.
 
 ## Contributing
 
