@@ -13,7 +13,7 @@ Use this section to inform users about which versions of your project are curren
 
 Please report security vulnerabilities responsibly. To report a vulnerability, follow these steps:
 
-1. **Create an Issue**: If you've discovered a security issue, please create a new issue on our [issue tracker](link-to-issue-tracker) with the label "Security Vulnerability".
+1. **Create an Issue**: If you've discovered a security issue, please create a new issue on our [issue tracker](https://github.com/confox/ByeBye/issues) with the label "Security Vulnerability".
 
 2. **Provide Details**: Clearly describe the vulnerability, including steps to reproduce it if possible.
 
