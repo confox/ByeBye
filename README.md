@@ -18,7 +18,10 @@
 
 ### Running the Script Locally
 
-1. **Clone the Repository**: Clone or download the ByeBye repository to your local machine. [Clone Here](https://github.com/confox/ByeBye)
+1. **Clone the Repository**: Clone or download the ByeBye repository to your local machine.
+```bash
+https://github.com/confox/ByeBye
+```
 
 2. **Navigate to the Script**: Open a terminal or command prompt and navigate to the directory containing the `byebye.py` script.
 
