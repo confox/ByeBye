@@ -1,25 +1,37 @@
+# Author information
+__author__ = "Turkish"
+__email__ = "turkish@d4rkwolf.co.uk"
+
 import os
 import platform
 import psutil  # For retrieving disk usage information
 
 def list_available_drives():
     """List available drives on the system."""
+    # Determine the operating system
     system = platform.system()
     drives = []
     if system == "Windows":
+        # On Windows, iterate over drive letters from A to Z and check if they exist
         drives = [f"{chr(drive)}:\\" for drive in range(ord('A'), ord('Z') + 1) if os.path.exists(f"{chr(drive)}:\\")]
     else:
-        drives = [os.path.join(root, entry) for root, _, entries in os.walk('/media') + os.walk('/mnt') + os.walk('/Volumes') for entry in entries]
+        # On other operating systems (Linux, macOS), search common mount points for drives
+        drive_mount_points = ['/media', '/mnt', '/Volumes']
+        drives = [os.path.join(drive_mount, entry) for drive_mount in drive_mount_points
+                  for entry in os.listdir(drive_mount)
+                  if os.path.isdir(os.path.join(drive_mount, entry))]
     return drives
 
 def get_drive_size(drive_path):
     """Get the size of the drive in bytes."""
+    # Use psutil to retrieve disk usage information
     usage = psutil.disk_usage(drive_path)
     return usage.total
 
 def select_drive(drives):
     """Prompt the user to select a drive from the available drives."""
     print("Available drives:")
+    # Enumerate through available drives and display their sizes
     for i, drive in enumerate(drives, start=1):
         size_gb = get_drive_size(drive) / (1024 ** 3)  # Convert bytes to gigabytes
         print(f"{i}. {drive} ({size_gb:.2f} GB)")
@@ -36,6 +48,7 @@ def select_drive(drives):
 def secure_delete_and_overwrite_drive(drive_path, overwrite_data):
     """Securely delete and overwrite data on the specified drive."""
     try:
+        # Walk through the directory tree of the drive and overwrite each file with random data
         for root, _, files in os.walk(drive_path):
             for file_name in files:
                 file_path = os.path.join(root, file_name)
@@ -61,3 +74,4 @@ if drives:
         secure_delete_and_overwrite_drive(drive_path, overwrite_data)
 else:
     print("No drives found.")
+
