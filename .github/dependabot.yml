@@ -5,7 +5,7 @@
 
 version: 2
 updates:
-  - package-ecosystem: "javascript" # Example: npm, bundler, pip
+  - package-ecosystem: "Python" # Example: npm, bundler, pip
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
