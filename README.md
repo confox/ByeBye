@@ -4,10 +4,10 @@
 
 ## Features
 
-- Detects the operating system and lists available drives accordingly.
-- Allows the user to select a drive from the list of available drives.
-- Securely deletes and overwrites data on the selected drive, making it unrecoverable.
-- Provides feedback and error messages to the user during the process.
+- **OS Detection**: Detects the operating system and lists available drives accordingly.
+- **Drive Selection**: Allows the user to select a drive from the list of available drives.
+- **Secure Deletion**: Overwrites data on the selected drive multiple times with random data, making it virtually impossible to recover.
+- **Feedback**: Provides informative messages to guide users through the process and handle errors gracefully.
 
 ## Requirements
 
@@ -18,7 +18,7 @@
 
 ### Running the Script Locally
 
-1. **Clone the Repository**: Clone or download the ByeBye repository to your local machine.
+1. **Clone the Repository**: Clone or download the ByeBye repository to your local machine. [Clone Here](https://github.com/confox/ByeBye)
 
 2. **Navigate to the Script**: Open a terminal or command prompt and navigate to the directory containing the `byebye.py` script.
 
@@ -28,9 +28,9 @@
     python byebye.py
     ```
 
-4. **Follow the Prompts**: Follow the prompts to select a drive and securely delete its contents.
+4. **Follow the Prompts**: Select a drive from the list of available drives and confirm to securely delete its contents.
 
-    **Note:** Ensure that you have appropriate permissions to modify the files on the selected drive. Always make sure you have backups of important data before running the script.
+    **Note:** Ensure you have necessary permissions and backups before proceeding.
 
 ### Running the Script Remotely
 
@@ -38,19 +38,19 @@
 
 2. **Install SSH Server**: If not already installed, install and configure an SSH server on the remote machine.
 
-3. **Determine IP Address**: Determine the IP address of the remote machine.
+3. **Determine IP Address**: Obtain the IP address of the remote machine.
 
-4. **SSH Connection**: From your local machine, open a terminal or command prompt and use the `ssh` command to connect to the remote machine and execute the script remotely:
+4. **SSH Connection**: From your local machine's terminal or command prompt, initiate an SSH connection:
 
     ```bash
     ssh username@remote_host 'python /path/to/your/script.py'
     ```
 
-    Replace `username` with your username on the remote machine, `remote_host` with the hostname or IP address of the remote machine, and `/path/to/your/script.py` with the path to your Python script on the remote machine.
+    Replace `username` with your remote machine's username, `remote_host` with its hostname or IP address, and `/path/to/your/script.py` with the path to your Python script.
 
 ## Contributing
 
-Contributions are welcome! If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request.
+Contributions are welcome! Feel free to submit bug reports, feature requests, or pull requests.
 
 ## License
 
